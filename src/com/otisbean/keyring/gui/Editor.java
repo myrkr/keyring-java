@@ -498,12 +498,9 @@ public class Editor extends Gui {
 
 			// set text fields according to item
 			// if categoryname was deleted, show first category "no category"
-			if (currentCategory.getItemCount() > item.getCategoryId()) {
-				currentCategory.setSelectedIndex(item.getCategoryId());
-			}
-			else {
+			currentCategory.setSelectedItem(item.getCategory());
+			if (currentCategory.getSelectedIndex() == -1)
 				currentCategory.setSelectedIndex(0); // no category
-			}
 
 			currentTitle.setText(item.getTitle());
 			currentUser.setText(item.getUsername());
