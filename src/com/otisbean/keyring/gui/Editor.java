@@ -1177,7 +1177,7 @@ public class Editor extends Gui {
 					myItem.setPass(String.valueOf(editor.currentPassword.getPassword()));
 					myItem.setUrl(editor.currentUrl.getText());
 					myItem.setNotes(editor.currentNotes.getText());
-					myItem.setCategoryId(editor.currentCategory.getSelectedIndex());
+					myItem.setCategory((String)editor.currentCategory.getSelectedItem());
 
 					// update tree view
 					editor.dynTree.populate();

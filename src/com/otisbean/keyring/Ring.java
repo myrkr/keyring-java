@@ -371,6 +371,9 @@ public class Ring {
 	}
 	
 	public synchronized int categoryIdForName(String categoryName) {
+		if (categoryName == null)
+			return 0;
+
 		if ("Unfiled".equalsIgnoreCase(categoryName)) {
 			return 0;
 		}
