@@ -1326,8 +1326,11 @@ public class Editor extends Gui {
 		 * @param e the ActionEvent to process
 		 */
 		public void actionPerformed(ActionEvent e) {
-			editor.dynTree.setCategoryFilter(editor.categoryList.getSelectedIndex());
+			String value = (String) editor.categoryList.getSelectedItem();
+			if (value == null)
+				return;
 
+			editor.dynTree.setCategoryFilter(getRing().categoryIdForName(value));
 			editor.showItem();
 		}
 	}

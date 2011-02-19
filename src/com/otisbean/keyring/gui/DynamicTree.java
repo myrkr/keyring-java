@@ -86,9 +86,9 @@ public class DynamicTree extends JPanel {
 	private Editor editor;
 
 	/**
-	 * Category-filter (0 = show all)
+	 * Category-filter (< 0 = show all)
 	 */
-	private int filterCategory = 0;
+	private int filterCategory = -1;
 
 	// ----------------------------------------------------------------
 	// constructor
@@ -175,7 +175,7 @@ public class DynamicTree extends JPanel {
 	 * This method sets the category-filter to zero (show all) and refreshes the tree view.
 	 */
 	public void clearFilter() {
-		filterCategory = 0;
+		filterCategory = -1;
 		populate();
 	}
 
@@ -260,8 +260,9 @@ public class DynamicTree extends JPanel {
 		
 		DefaultMutableTreeNode firstNode = null;
 		for(Item item : myEntries) {
-			if (filterCategory != 0 &&
-					(filterCategory - 1) != item.getCategoryId()) {
+			if (filterCategory >= 0 &&
+			    filterCategory != item.getCategoryId())
+			{
 				continue;
 			}
 			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(item);
