@@ -249,6 +249,7 @@ public class Editor extends Gui {
 		csvMenuItem.addActionListener(new csvListener(this));
 		aboutMenuItem.addActionListener(new AboutListener(this));
 		importMenuItem.addActionListener(new ImportListener(this));
+		preferenceMenuItem.addActionListener(new PreferenceListener(this));
 		newMenuItem.addActionListener(new newListener(this));
 
 		// itemPane Listener
@@ -350,6 +351,7 @@ public class Editor extends Gui {
 		csvMenuItem.setEnabled(dbLoaded);
 		categoriesMenuItem.setEnabled(dbLoaded);
 		importMenuItem.setEnabled(! dbLoaded);
+		preferenceMenuItem.setEnabled(true);
 
 		toggleButtonsAndFields(false, dbLoaded);
 		setBtnLock(false, dbLoaded);
@@ -633,7 +635,7 @@ public class Editor extends Gui {
 		public void actionPerformed(ActionEvent e) {
 			String urlval = null != dbFilename && dbFilename.startsWith("http") ?
 					dbFilename : "";
-			String defaultURL = prefs.get("DefaultURL", "");
+			String defaultURL = properties.getDefaultURL();
 			if (urlval.isEmpty())
 				urlval = defaultURL;
 			String url = (String) JOptionPane.showInputDialog(
@@ -970,6 +972,36 @@ public class Editor extends Gui {
 				msgInformation("Database imported.");
 				initEditorState(true);
 			}
+		}
+	}
+
+	/**
+	 * MenuItem Preferences: show preference dialog and store the values,
+	 */
+	public class PreferenceListener implements ActionListener {
+
+		protected Editor editor;
+
+		/**
+		 * Default constructor.
+		 *
+		 * @param editor Reference to class Editor
+		 */
+		protected PreferenceListener(Editor editor) {
+			this.editor = editor;
+		}
+
+		/**
+		 * This method opens the import dialog and closes the loaded database.
+		 *
+		 * @param e the ActionEvent to process
+		 */
+		public void actionPerformed(ActionEvent e) {
+			// show import dialog
+			PreferenceDialog prefDialog = new PreferenceDialog(editor.frame, properties);
+
+			prefDialog.pack();
+			prefDialog.setVisible(true);
 		}
 	}
 

@@ -45,7 +45,6 @@ public class Gui {
 	protected static final String VERSION = "2.0a";
 	protected static final String FRAMETITLE = "Keyring Desktop";
 
-	protected Preferences prefs;
 	protected Prop properties;
 
 	// MenuBar
@@ -61,6 +60,7 @@ public class Gui {
 	protected JMenuItem categoriesMenuItem;
 	protected JMenuItem csvMenuItem;
 	protected JMenuItem importMenuItem;
+	protected JMenuItem preferenceMenuItem;
 	protected JMenuItem newMenuItem;
 
 	// Help
@@ -112,7 +112,7 @@ public class Gui {
 		 */
 		public synchronized void restartTimeout() {
 			endDate = new Date(System.currentTimeMillis() +
-				prefs.getLong("PasswordTimeout", 60 * 1000));
+				properties.getPasswordTimeout() * 1000);
 
 			synchronized (sleepGate) {
 				sleepGate.notifyAll();
@@ -222,6 +222,11 @@ public class Gui {
 
 		newMenuItem = new JMenuItem("New database", KeyEvent.VK_N);
 		catMenu.add(newMenuItem);
+
+		catMenu.addSeparator();
+
+		preferenceMenuItem = new JMenuItem("Preferences", KeyEvent.VK_P);
+		catMenu.add(preferenceMenuItem);
 
 		JMenu helpMenu = new JMenu("Help");
 		helpMenu.setMnemonic(KeyEvent.VK_H);
@@ -473,8 +478,7 @@ public class Gui {
 	}
 
 	public Gui() {
-		prefs = Preferences.userNodeForPackage(getClass());
-		properties = new Prop(prefs);
+		properties = new Prop();
 	}
 
 }

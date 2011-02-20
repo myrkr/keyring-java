@@ -36,11 +36,29 @@ public class Prop {
 	// ----------------------------------------------------------------
 	// variables
 	// ----------------------------------------------------------------
+	private Preferences prefs;
 
-	/**
-	 * Default filename
-	 */
-	private static final String iniFilename = ".keyringeditor";
+	public int getPasswordTimeout() {
+		return prefs.getInt("PasswordTimeout", 60);
+	}
+
+	public void setPasswordTimeout(int timeout) {
+		if (timeout <= 0 || timeout == 60)
+			prefs.remove("PasswordTimeout");
+		else
+			prefs.putInt("PasswordTimeout", timeout);
+	}
+
+	public String getDefaultURL() {
+		return prefs.get("DefaultURL", "");
+	}
+
+	public void setDefaultURL(String url) {
+		if (url == null || url.isEmpty())
+			prefs.remove("DefaultURL");
+		else
+			prefs.put("DefaultURL", url);
+	}
 
 	// ----------------------------------------------------------------
 	// constructor
@@ -49,56 +67,7 @@ public class Prop {
 	 * Default constructor.
 	 *
 	 */
-	public Prop(Preferences prefs) {
-		setup(prefs);
-	}
-
-	// ----------------------------------------------------------------
-	// public ---------------------------------------------------------
-	// ----------------------------------------------------------------
-	/**
-	 * This method opens the file keyringeditor.ini and reads the
-	 * parameters "TitleSeparator", "CsvSeparator" and "PasswordTimeout".
-	 *
-	 * If no file is found, default values are used.
-	 *
-	 * TitleSeparator separates levels in an entry title for the tree view ('/').
-	 * CsvSeparator is used as the separator for converting entries to a csv-file (';').
-	 * PasswordTimeout is the time in minutes after inactivity forces a lock of the application ('1').
-	 */
-	public void setup(Preferences prefs) {
-		Properties props = new Properties();
-
-		// load KeyringEditor.ini
-		try {
-			String filename =
-				System.getProperty("user.home") +
-				System.getProperty("file.separator") +
-				iniFilename;
-			FileInputStream in = new FileInputStream(filename);
-			props.load(in);
-			in.close();
-		}
-		catch(Exception e) {
-			System.err.println("Prop.java: File " + iniFilename + " not found. Using default values.");
-			return;
-		}
-
-		/*
-		String csvFilename = props.getProperty("CsvFilename");
-		if(csvFilename != null) {
-			editor.getModel().setCsvFilename(csvFilename); // Default: 'keyring.csv'
-		}
-		*/
-
-		String pwTimeout = props.getProperty("PasswordTimeout");
-		if(pwTimeout != null) {
-			int timeout = Integer.parseInt(pwTimeout); // minutes
-			prefs.putLong("PasswordTimeout", timeout * 60 * 1000);
-		}
-
-		String defaultURL = props.getProperty("DefaultURL");
-		if (defaultURL != null)
-			prefs.put("DefaultURL", defaultURL);
+	public Prop() {
+		this.prefs = Preferences.userNodeForPackage(getClass());
 	}
 }
