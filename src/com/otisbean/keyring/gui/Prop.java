@@ -40,7 +40,7 @@ public class Prop {
 	/**
 	 * Default filename
 	 */
-	private static final String iniFilename = "keyringeditor.ini";
+	private static final String iniFilename = ".keyringeditor";
 
 	// ----------------------------------------------------------------
 	// constructor
@@ -71,7 +71,11 @@ public class Prop {
 
 		// load KeyringEditor.ini
 		try {
-			FileInputStream in = new FileInputStream(iniFilename);
+			String filename =
+				System.getProperty("user.home") +
+				System.getProperty("file.separator") +
+				iniFilename;
+			FileInputStream in = new FileInputStream(filename);
 			props.load(in);
 			in.close();
 		}
