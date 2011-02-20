@@ -35,6 +35,7 @@ public class PreferenceDialog
 	private Frame frame;
 	private JTextField defaultURL;
 	private JSpinner passwordTimeout;
+	private JCheckBox informAboutSave;
 	private JCheckBox confirmDeletion;
 	private JCheckBox deleteEmptyCategories;
 	private JOptionPane optionPane;
@@ -62,6 +63,8 @@ public class PreferenceDialog
 		String passwordTimeoutString = "Password timeout (seconds)";
 		this.passwordTimeout = new JSpinner(passwordTimeoutModel);
 
+		this.informAboutSave = new JCheckBox("Inform about each save operation",
+			prefs.getInformAboutSave());
 		this.confirmDeletion = new JCheckBox("Confirm deletions",
 			prefs.getConfirmDeletion());
 
@@ -70,6 +73,7 @@ public class PreferenceDialog
 
 		Object array[] = { defaultURLString, defaultURL,
 		                   passwordTimeoutString, passwordTimeout,
+				   informAboutSave,
 				   confirmDeletion,
 				   deleteEmptyCategories
 		};
@@ -147,6 +151,7 @@ public class PreferenceDialog
 				Integer timeout = (Integer)passwordTimeout.getValue();
 				prefs.setDefaultURL(url);
 				prefs.setPasswordTimeout(timeout.intValue());
+				prefs.setInformAboutSave(informAboutSave.isSelected());
 				prefs.setConfirmDeletion(confirmDeletion.isSelected());
 				prefs.setDeleteEmptyCategories(deleteEmptyCategories.isSelected());
 			} else {

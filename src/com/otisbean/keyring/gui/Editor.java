@@ -1168,8 +1168,9 @@ public class Editor extends Gui {
 
 					// show new item
 					editor.dynTree.show(myItem);
-					
-					msgInformation("Entries saved to: " + editor.dbFilename);
+
+					if (properties.getInformAboutSave())
+						msgInformation("Entries saved to: " + editor.dbFilename);
 				}
 			}
 			catch(Exception ex) {
@@ -1232,7 +1233,8 @@ public class Editor extends Gui {
 					editor.dynTree.show(myItem);
 					editor.showItem();
 
-					msgInformation("Entries saved to: " + editor.dbFilename);
+					if (properties.getInformAboutSave())
+						msgInformation("Entries saved to: " + editor.dbFilename);
 				}
 			}
 			catch(Exception ex) {
@@ -1289,7 +1291,8 @@ public class Editor extends Gui {
 					editor.ring.save(dbFilename,
 						properties.getDeleteEmptyCategories());
 
-					msgInformation("Item " + myItem.getTitle() + " deleted. Database " + editor.dbFilename + " updated.");
+					if (properties.getInformAboutSave())
+						msgInformation("Item " + myItem.getTitle() + " deleted. Database " + editor.dbFilename + " updated.");
 				}
 				catch(Exception ex) {
 					msgError(ex, "delItemListener", false);
