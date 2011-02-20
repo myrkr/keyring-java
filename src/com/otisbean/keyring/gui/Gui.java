@@ -33,6 +33,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import java.awt.*;
+import java.util.prefs.Preferences;
 
 /**
  * This class setup the gui and the password timeout functions.
@@ -43,12 +44,9 @@ public class Gui {
 	// ----------------------------------------------------------------
 	protected static final String VERSION = "2.0a";
 	protected static final String FRAMETITLE = "Keyring Desktop";
-    
-	/**
-     * Time in milliseconds until password timeout.
-     * FIXME should take this from ring.prefs instead.
-     */
-    protected static long PASSWORD_TIMEOUT = 60000; // default: 1 minute = 60 s * 1000 ms
+
+	protected Preferences prefs;
+	protected Prop properties;
 
 	// MenuBar
 	protected JMenuBar menuBar;
@@ -113,7 +111,8 @@ public class Gui {
 		 * Sets the variable endDate to new timeout.
 		 */
 		public synchronized void restartTimeout() {
-			endDate = new Date(System.currentTimeMillis() + PASSWORD_TIMEOUT);
+			endDate = new Date(System.currentTimeMillis() +
+				prefs.getLong("PasswordTimeout", 60 * 1000));
 
 			synchronized (sleepGate) {
 				sleepGate.notifyAll();
@@ -472,4 +471,10 @@ public class Gui {
 		//frame.setContentPane(contentPane);
 		return contentPane;
 	}
+
+	public Gui() {
+		prefs = Preferences.userNodeForPackage(getClass());
+		properties = new Prop(prefs);
+	}
+
 }

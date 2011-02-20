@@ -27,6 +27,7 @@ package com.otisbean.keyring.gui;
 
 import java.io.FileInputStream;
 import java.util.Properties;
+import java.util.prefs.Preferences;
 
 /**
  * This class is used to load parameters from the file keyringeditor.ini.
@@ -41,21 +42,15 @@ public class Prop {
 	 */
 	private static final String iniFilename = "keyringeditor.ini";
 
-	/**
-	 * Reference to class Editor
-	 */
-	private Editor editor;
-
 	// ----------------------------------------------------------------
 	// constructor
 	// ----------------------------------------------------------------
 	/**
 	 * Default constructor.
 	 *
-	 * @param editor Reference to class Editor
 	 */
-	public Prop(Editor editor) {
-		this.editor = editor;
+	public Prop(Preferences prefs) {
+		setup(prefs);
 	}
 
 	// ----------------------------------------------------------------
@@ -71,7 +66,7 @@ public class Prop {
 	 * CsvSeparator is used as the separator for converting entries to a csv-file (';').
 	 * PasswordTimeout is the time in minutes after inactivity forces a lock of the application ('1').
 	 */
-	public void setup() {
+	public void setup(Preferences prefs) {
 		Properties props = new Properties();
 
 		// load KeyringEditor.ini
@@ -95,8 +90,11 @@ public class Prop {
 		String pwTimeout = props.getProperty("PasswordTimeout");
 		if(pwTimeout != null) {
 			int timeout = Integer.parseInt(pwTimeout); // minutes
-
-			Gui.PASSWORD_TIMEOUT = timeout * 60 * 1000;  // ms // Default: 1 minute
+			prefs.putLong("PasswordTimeout", timeout * 60 * 1000);
 		}
+
+		String defaultURL = props.getProperty("DefaultURL");
+		if (defaultURL != null)
+			prefs.put("DefaultURL", defaultURL);
 	}
 }
