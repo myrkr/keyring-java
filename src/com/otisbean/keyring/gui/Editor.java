@@ -633,10 +633,7 @@ public class Editor extends Gui {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			String urlval = null != dbFilename && dbFilename.startsWith("http") ?
-					dbFilename : "";
-			String defaultURL = properties.getDefaultURL();
-			if (urlval.isEmpty())
-				urlval = defaultURL;
+					dbFilename : properties.getDefaultURL();
 			String url = (String) JOptionPane.showInputDialog(
                     frame,
                     "URL (must start with \"http\"):",
@@ -916,9 +913,7 @@ public class Editor extends Gui {
 			}
 			
 			String urlval = null != dbFilename && dbFilename.startsWith("http") ?
-					dbFilename : "";
-			if (urlval.isEmpty())
-				urlval = properties.getDefaultURL();
+					dbFilename : properties.getDefaultURL();
 			String url = (String) JOptionPane.showInputDialog(
                     frame,
                     "URL (must start with \"http\"):",
