@@ -1384,6 +1384,8 @@ public class Editor extends Gui {
 			if (value == null)
 				return;
 
+			if (getRing() == null)
+				return;
 			editor.dynTree.setCategoryFilter(getRing().categoryIdForName(value));
 			editor.showItem();
 		}
