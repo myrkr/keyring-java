@@ -135,7 +135,11 @@ public class DynamicTree extends JPanel {
 			if(null != node) {
 				if(node.isLeaf()) {
 					nodeInfo = node.getUserObject();
-					
+
+					// the root node is a string object, so skip it
+					if (node.isRoot())
+						continue;
+
 					Item e1 = (Item) nodeInfo;
 					Item e2 = (Item) newitem;
 					
