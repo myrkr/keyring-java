@@ -36,6 +36,7 @@ public class PreferenceDialog
 	private JTextField defaultURL;
 	private JSpinner passwordTimeout;
 	private JCheckBox confirmDeletion;
+	private JCheckBox deleteEmptyCategories;
 	private JOptionPane optionPane;
 
 	private String btnSave = "Save";
@@ -64,9 +65,13 @@ public class PreferenceDialog
 		this.confirmDeletion = new JCheckBox("Confirm deletions",
 			prefs.getConfirmDeletion());
 
+		this.deleteEmptyCategories = new JCheckBox("Delete empty categories",
+			prefs.getDeleteEmptyCategories());
+
 		Object array[] = { defaultURLString, defaultURL,
 		                   passwordTimeoutString, passwordTimeout,
-				   confirmDeletion
+				   confirmDeletion,
+				   deleteEmptyCategories
 		};
 		Object options[] = { btnSave, btnAbort };
 		this.optionPane = new JOptionPane(array,
@@ -143,6 +148,7 @@ public class PreferenceDialog
 				prefs.setDefaultURL(url);
 				prefs.setPasswordTimeout(timeout.intValue());
 				prefs.setConfirmDeletion(confirmDeletion.isSelected());
+				prefs.setDeleteEmptyCategories(deleteEmptyCategories.isSelected());
 			} else {
 				// cancel
 				cancelled = true;

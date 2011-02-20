@@ -234,11 +234,22 @@ public class Ring {
 	 * @throws GeneralSecurityException
 	 */
 	@SuppressWarnings("unchecked")
-	public JSONObject getExportData() throws GeneralSecurityException {
+	public JSONObject getExportData(boolean noEmptyCategories) throws GeneralSecurityException {
 		log("getExportData()");
 		JSONObject dataObject = new JSONObject();
 		dataObject.put("db", db);
-		dataObject.put("categories", categoriesById);
+
+		if (noEmptyCategories) {
+			Map<Integer, String> toSave = new HashMap<Integer, String>();
+
+			for(Item item : getItems()) {
+				int id = item.getCategoryId();
+				toSave.put(id, categoryNameForId(id));
+			}
+			dataObject.put("categories", toSave);
+		} else {
+			dataObject.put("categories", categoriesById);
+		}
 		JSONObject crypt = new JSONObject();
 		crypt.put("salt", salt);
 		crypt.put("checkData", checkData);
@@ -542,10 +553,11 @@ public class Ring {
 	 * Export data to the specified file.
 	 * 
 	 * @param outFile Path to the output file
+	 * @param compressCategories remove empty categories in output file
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
-	public void save(String outFile)
+	public void save(String outFile, boolean compressCategories)
         	throws IOException, GeneralSecurityException {
 		log("save(" + outFile + ")");
 		if (outFile.startsWith("http")) {
@@ -557,7 +569,7 @@ public class Ring {
 		    urlConn.setRequestProperty ("Content-Type", "application/x-www-form-urlencoded");
 
 		    DataOutputStream dos = new DataOutputStream (urlConn.getOutputStream()); 
-		    String message = "data=" + URLEncoder.encode(getExportData().toJSONString(), "UTF-8");
+		    String message = "data=" + URLEncoder.encode(getExportData(compressCategories).toJSONString(), "UTF-8");
 		    dos.writeBytes(message); 
 		    dos.flush(); 
 		    dos.close();
@@ -580,7 +592,7 @@ public class Ring {
 		    br.close(); 
 		} else {
 			Writer writer = getWriter(outFile);
-			getExportData().writeJSONString(writer);
+			getExportData(compressCategories).writeJSONString(writer);
 			closeWriter(writer, outFile);
 		}
 	}

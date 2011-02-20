@@ -870,7 +870,8 @@ public class Editor extends Gui {
 					
 					if (fileDoesntExistOrOverwriteConfirmed(selectedFile)) {
 						// save entries to csv file
-						editor.ring.save(filename);
+						editor.ring.save(filename,
+							properties.getDeleteEmptyCategories());
 						dbFilename = filename;
 						// FIXME set window title & dyntree root to reflect new filename
 						
@@ -924,7 +925,8 @@ public class Editor extends Gui {
 			
 			if (null != url) {
 				try {
-					editor.ring.save(url);
+					editor.ring.save(url,
+						properties.getDeleteEmptyCategories());
 					dbFilename = url;
 					// FIXME set window title & dyntree root to reflect new URL
 					msgInformation("Keyring saved to: " + url);
@@ -1161,7 +1163,8 @@ public class Editor extends Gui {
 					setupCategories(ring.getCategories());
 
 					// save database
-					editor.ring.save(dbFilename);
+					editor.ring.save(dbFilename,
+						properties.getDeleteEmptyCategories());
 
 					// show new item
 					editor.dynTree.show(myItem);
@@ -1222,7 +1225,8 @@ public class Editor extends Gui {
 					editor.dynTree.populate();
 
 					// save database
-					editor.ring.save(dbFilename);
+					editor.ring.save(dbFilename,
+						properties.getDeleteEmptyCategories());
 					
 					// Redisplay the item
 					editor.dynTree.show(myItem);
@@ -1282,7 +1286,8 @@ public class Editor extends Gui {
 
 				// save changes
 				try {
-					editor.ring.save(dbFilename);
+					editor.ring.save(dbFilename,
+						properties.getDeleteEmptyCategories());
 
 					msgInformation("Item " + myItem.getTitle() + " deleted. Database " + editor.dbFilename + " updated.");
 				}

@@ -68,6 +68,14 @@ public class Prop {
 		prefs.putBoolean("ConfirmDeletion", value);
 	}
 
+	public boolean getDeleteEmptyCategories() {
+		return prefs.getBoolean("DeleteEmptyCategories", false);
+	}
+
+	public void setDeleteEmptyCategories(boolean value) {
+		prefs.putBoolean("DeleteEmptyCategories", value);
+	}
+
 	// ----------------------------------------------------------------
 	// constructor
 	// ----------------------------------------------------------------

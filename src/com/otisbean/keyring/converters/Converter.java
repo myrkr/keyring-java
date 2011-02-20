@@ -61,7 +61,7 @@ public abstract class Converter {
 	public int export(String outPassword, String inPassword, String inFile,
 			String outFile) throws Exception {
 		Ring ring = convert(inFile, inPassword, outPassword);
-		ring.save(outFile);
+		ring.save(outFile, false);
 		return ring.getItems().size();
 	}
 
