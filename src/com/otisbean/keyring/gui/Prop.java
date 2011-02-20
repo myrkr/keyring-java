@@ -60,6 +60,14 @@ public class Prop {
 			prefs.put("DefaultURL", url);
 	}
 
+	public boolean getConfirmDeletion() {
+		return prefs.getBoolean("ConfirmDeletion", true);
+	}
+
+	public void setConfirmDeletion(boolean value) {
+		prefs.putBoolean("ConfirmDeletion", value);
+	}
+
 	// ----------------------------------------------------------------
 	// constructor
 	// ----------------------------------------------------------------

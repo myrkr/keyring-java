@@ -364,7 +364,7 @@ public class Editor extends Gui {
 	 * @param newItemEnabled True if the "new item" button should be enabled
 	 */
 	private void toggleButtonsAndFields(boolean enabled, boolean newItemEnabled) {
-		delItem.setEnabled(false);
+		delItem.setEnabled(enabled);
 		saveItem.setEnabled(false);
 		saveItem.setBackground(null);
 		currentCategory.setEnabled(enabled);
@@ -1263,6 +1263,16 @@ public class Editor extends Gui {
 
 			if(node != null) {
 				Item myItem = editor.dynTree.getItem(node);
+
+				if (properties.getConfirmDeletion()) {
+					int res = JOptionPane.showConfirmDialog(editor.frame,
+						"Confirm deletion of \"" + myItem.getTitle() + "\"",
+						"Really delete?",
+						JOptionPane.YES_NO_OPTION);
+
+					if (res != JOptionPane.YES_OPTION)
+						return;
+				}
 
 				// delete item
 				editor.ring.removeItem(myItem);

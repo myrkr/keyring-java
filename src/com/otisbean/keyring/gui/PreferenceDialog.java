@@ -5,13 +5,12 @@
 package com.otisbean.keyring.gui;
 
 import javax.swing.JDialog;
-import java.awt.event.ActionListener;
 import java.awt.Frame;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JOptionPane;
-import java.util.prefs.Preferences;
+import javax.swing.JCheckBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -36,6 +35,7 @@ public class PreferenceDialog
 	private Frame frame;
 	private JTextField defaultURL;
 	private JSpinner passwordTimeout;
+	private JCheckBox confirmDeletion;
 	private JOptionPane optionPane;
 
 	private String btnSave = "Save";
@@ -61,8 +61,12 @@ public class PreferenceDialog
 		String passwordTimeoutString = "Password timeout (seconds)";
 		this.passwordTimeout = new JSpinner(passwordTimeoutModel);
 
+		this.confirmDeletion = new JCheckBox("Confirm deletions",
+			prefs.getConfirmDeletion());
+
 		Object array[] = { defaultURLString, defaultURL,
-		                   passwordTimeoutString, passwordTimeout
+		                   passwordTimeoutString, passwordTimeout,
+				   confirmDeletion
 		};
 		Object options[] = { btnSave, btnAbort };
 		this.optionPane = new JOptionPane(array,
@@ -138,6 +142,7 @@ public class PreferenceDialog
 				Integer timeout = (Integer)passwordTimeout.getValue();
 				prefs.setDefaultURL(url);
 				prefs.setPasswordTimeout(timeout.intValue());
+				prefs.setConfirmDeletion(confirmDeletion.isSelected());
 			} else {
 				// cancel
 				cancelled = true;
