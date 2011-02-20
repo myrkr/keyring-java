@@ -44,6 +44,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.otisbean.keyring.Ring;
 /**
  * This dialog allows the user to enter a new item.
  */
@@ -78,6 +79,8 @@ public class NewItemDialog extends JDialog implements ActionListener, PropertyCh
 	private String btnString1 = "OK";
 	private String btnString2 = "Cancel";
 
+	private Ring ring;
+
 	// ----------------------------------------------------------------
 	// constructor
 	// ----------------------------------------------------------------
@@ -87,12 +90,15 @@ public class NewItemDialog extends JDialog implements ActionListener, PropertyCh
 	 * @param aFrame Reference to the Gui frame
 	 * @param cat Vector of category-names
 	 */
-	public NewItemDialog(Frame aFrame, Vector<String> cat) {
+	public NewItemDialog(Frame aFrame, Ring ring) {
 		super(aFrame, "New Item", true);
+
+		this.ring = ring;
 
 		returnParameter = new Object[6];
 
 		// list of category-names
+		Vector<String> cat = ring.getCategories();
 		categoryList = new JComboBox(cat);
 		categoryList.setModel(new DefaultComboBoxModel(cat));
 
@@ -249,7 +255,8 @@ public class NewItemDialog extends JDialog implements ActionListener, PropertyCh
 	 * This method gets the input fields and updates the variable returnParameter.
 	 */
 	private void setReturnParameter() {
-		Integer cat = new Integer(categoryList.getSelectedIndex());
+		String categoryName = (String)categoryList.getSelectedItem();
+		Integer cat = new Integer(ring.categoryIdForName(categoryName));
 
 		returnParameter[0] = (Object) cat;
 		returnParameter[1] = (Object) textTitle.getText();

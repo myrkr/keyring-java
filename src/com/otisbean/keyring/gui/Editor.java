@@ -1085,7 +1085,7 @@ public class Editor extends Gui {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			// show edit dialog
-			NewItemDialog editDlg = new NewItemDialog(editor.frame, editor.ring.getCategories());
+			NewItemDialog editDlg = new NewItemDialog(editor.frame, editor.ring);
 			editDlg.pack();
 			editDlg.setVisible(true);
 
