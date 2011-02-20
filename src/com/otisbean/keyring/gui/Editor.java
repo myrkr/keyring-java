@@ -917,6 +917,8 @@ public class Editor extends Gui {
 			
 			String urlval = null != dbFilename && dbFilename.startsWith("http") ?
 					dbFilename : "";
+			if (urlval.isEmpty())
+				urlval = properties.getDefaultURL();
 			String url = (String) JOptionPane.showInputDialog(
                     frame,
                     "URL (must start with \"http\"):",
