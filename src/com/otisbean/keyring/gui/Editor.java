@@ -406,7 +406,10 @@ public class Editor extends Gui {
 		}
 
 		displayCategories.add(0, "All");
+		String category = (String)categoryList.getSelectedItem();
 		categoryList.setModel(new DefaultComboBoxModel(displayCategories));
+		if (category != null)
+			categoryList.setSelectedItem(category);
 
 		// currentCategory
 		Vector<String> currentCategories;
