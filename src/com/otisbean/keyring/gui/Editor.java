@@ -922,7 +922,7 @@ public class Editor extends Gui {
 			String url = (String) JOptionPane.showInputDialog(
                     frame,
                     "URL (must start with \"http\"):",
-                    "Load from URL",
+                    "Save to URL",
                     JOptionPane.PLAIN_MESSAGE,
                     null,
                     null,
