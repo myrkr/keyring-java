@@ -54,6 +54,7 @@ public class PreferenceDialog
 		String defaultURLString = "URL for remote DB access";
 		this.defaultURL = new JTextField(20);
 		this.defaultURL.setText(prefs.getDefaultURL());
+		this.defaultURL.setToolTipText("If set, this http URL will be used as default for remote loading and saving.");
 
 		int value = prefs.getPasswordTimeout();
 		int min = 10;
@@ -62,14 +63,19 @@ public class PreferenceDialog
 		SpinnerNumberModel passwordTimeoutModel = new SpinnerNumberModel(value, min, max, step);
 		String passwordTimeoutString = "Password timeout (seconds)";
 		this.passwordTimeout = new JSpinner(passwordTimeoutModel);
+		this.passwordTimeout.setToolTipText("After this number of seconds the password expires and you need to unlock the program first.");
 
 		this.informAboutSave = new JCheckBox("Inform about each save operation",
 			prefs.getInformAboutSave());
+		this.informAboutSave.setToolTipText("If disabled, you will not informed about save operations when modifying entries.");
+
 		this.confirmDeletion = new JCheckBox("Confirm deletions",
 			prefs.getConfirmDeletion());
+		this.confirmDeletion.setToolTipText("If enabled, all delete operations requires an addition confirmation.");
 
 		this.deleteEmptyCategories = new JCheckBox("Delete empty categories",
 			prefs.getDeleteEmptyCategories());
+		this.deleteEmptyCategories.setToolTipText("If enabled, categories without entries are removed while saving.");
 
 		Object array[] = { defaultURLString, defaultURL,
 		                   passwordTimeoutString, passwordTimeout,
