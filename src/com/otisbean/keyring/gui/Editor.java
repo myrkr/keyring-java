@@ -255,7 +255,7 @@ public class Editor extends Gui {
 		// itemPane Listener
 		currentCategory.addActionListener(new currentCategorySelectionListener(this));
 		// It's just a dropdown, not really a combo box
-		currentCategory.setEditable(false);
+		currentCategory.setEditable(true);
 		currentTitle.getDocument().addDocumentListener(new documentListener(this));
 		currentUser.getDocument().addDocumentListener(new documentListener(this));
 		currentPassword.getDocument().addDocumentListener(new documentListener(this));
@@ -499,11 +499,7 @@ public class Editor extends Gui {
 			Item item = (Item) nodeInfo;
 
 			// set text fields according to item
-			// if categoryname was deleted, show first category "no category"
 			currentCategory.setSelectedItem(item.getCategory());
-			if (currentCategory.getSelectedIndex() == -1)
-				currentCategory.setSelectedIndex(0); // no category
-
 			currentTitle.setText(item.getTitle());
 			currentUser.setText(item.getUsername());
 			currentNotes.setText(item.getNotes());
@@ -1161,6 +1157,9 @@ public class Editor extends Gui {
 					// update tree view
 					editor.dynTree.populate();
 
+					// the categories might have changed
+					setupCategories(ring.getCategories());
+
 					// save database
 					editor.ring.save(dbFilename);
 
@@ -1212,7 +1211,12 @@ public class Editor extends Gui {
 					myItem.setPass(String.valueOf(editor.currentPassword.getPassword()));
 					myItem.setUrl(editor.currentUrl.getText());
 					myItem.setNotes(editor.currentNotes.getText());
-					myItem.setCategory((String)editor.currentCategory.getSelectedItem());
+
+					String categoryName = (String)editor.currentCategory.getSelectedItem();
+					int id = editor.getRing().categoryIdForName(categoryName);
+					myItem.setCategoryId(id);
+
+					setupCategories(ring.getCategories());
 
 					// update tree view
 					editor.dynTree.populate();

@@ -479,10 +479,12 @@ public class Ring {
 			Map<String, String> tmpCats = (Map<String, String>) tmp;
 			for (Map.Entry<String, String> cat : tmpCats.entrySet()) {
 				int id = Integer.parseInt(cat.getKey());
+				updateNextCategories(id);
 				categoriesById.put(id, cat.getValue());
 				categoriesByName.put(cat.getValue(), id);
 			}
 		}
+
 		// make sure we always have the "all" and "unfiled" categories
 		setDefaultCategories();
 		
@@ -606,5 +608,10 @@ public class Ring {
 	
 	private void log(String message) {
 		System.err.println(message);
+	}
+
+	private synchronized void updateNextCategories(int id) {
+		if (id >= nextCategory)
+			nextCategory = id + 1;
 	}
 }

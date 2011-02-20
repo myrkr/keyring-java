@@ -101,6 +101,7 @@ public class NewItemDialog extends JDialog implements ActionListener, PropertyCh
 		Vector<String> cat = ring.getCategories();
 		categoryList = new JComboBox(cat);
 		categoryList.setModel(new DefaultComboBoxModel(cat));
+		categoryList.setEditable(true);
 
 		// text fields
 		textTitle = new JTextField(40);
