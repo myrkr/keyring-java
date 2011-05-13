@@ -38,6 +38,7 @@ public class PreferenceDialog
 	private JCheckBox informAboutSave;
 	private JCheckBox confirmDeletion;
 	private JCheckBox deleteEmptyCategories;
+	private JCheckBox allowPasswordCopy;
 	private JOptionPane optionPane;
 
 	private String btnSave = "Save";
@@ -77,11 +78,16 @@ public class PreferenceDialog
 			prefs.getDeleteEmptyCategories());
 		this.deleteEmptyCategories.setToolTipText("If enabled, categories without entries are removed while saving.");
 
+		this.allowPasswordCopy = new JCheckBox("Allow password copy",
+			prefs.getAllowPasswordCopy());
+		this.allowPasswordCopy.setToolTipText("If set, you will be allowed to copy the curent password to clipboard.");
+
 		Object array[] = { defaultURLString, defaultURL,
 		                   passwordTimeoutString, passwordTimeout,
 				   informAboutSave,
 				   confirmDeletion,
-				   deleteEmptyCategories
+				   deleteEmptyCategories,
+				   allowPasswordCopy
 		};
 		Object options[] = { btnSave, btnAbort };
 		this.optionPane = new JOptionPane(array,
@@ -160,6 +166,7 @@ public class PreferenceDialog
 				prefs.setInformAboutSave(informAboutSave.isSelected());
 				prefs.setConfirmDeletion(confirmDeletion.isSelected());
 				prefs.setDeleteEmptyCategories(deleteEmptyCategories.isSelected());
+				prefs.setAllowPasswordCopy(allowPasswordCopy.isSelected());
 			} else {
 				// cancel
 				cancelled = true;

@@ -44,9 +44,17 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.KeyStroke;
 
 import com.otisbean.keyring.Item;
 import com.otisbean.keyring.Ring;
+
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.StringSelection;
+import java.awt.Toolkit;
 
 /**
  * This class handles the gui.
@@ -261,6 +269,11 @@ public class Editor extends Gui {
 		currentPassword.getDocument().addDocumentListener(new documentListener(this));
 		currentUrl.getDocument().addDocumentListener(new documentListener(this));
 		currentNotes.getDocument().addDocumentListener(new documentListener(this));
+
+		if (properties.getAllowPasswordCopy()) {
+			KeyStroke key = KeyStroke.getKeyStroke("control C");
+			currentPassword.getKeymap().addActionForKeyStroke(key, new CopyPasswordAction(this));
+		}
 
 		// itemListPane Listener
 		categoryList.addActionListener(new CategorySelectionListener(this));
@@ -1445,6 +1458,30 @@ public class Editor extends Gui {
 				showPassword = false;
 				editor.currentPassword.setEchoChar('*');
 			}
+		}
+	}
+
+	public class CopyPasswordAction
+		extends javax.swing.AbstractAction
+		implements ClipboardOwner
+	{
+		protected Editor editor;
+		protected CopyPasswordAction(Editor editor) {
+			this.editor = editor;
+		}
+
+		public void lostOwnership(Clipboard aClipboard,
+		                          Transferable aContents)
+		{
+			System.out.println("Lost ownership");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			String password = new String(this.editor.currentPassword.getPassword());
+			StringSelection stringSelection = new StringSelection(password);
+			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clipboard.setContents( stringSelection, null );
 		}
 	}
 

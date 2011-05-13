@@ -84,6 +84,13 @@ public class Prop {
 		prefs.putBoolean("InformAboutSave", value);
 	}
 
+	public boolean getAllowPasswordCopy() {
+		return prefs.getBoolean("AllowPasswordCopy", false);
+	}
+
+	public void setAllowPasswordCopy(boolean value) {
+		prefs.putBoolean("AllowPasswordCopy", value);
+	}
 	// ----------------------------------------------------------------
 	// constructor
 	// ----------------------------------------------------------------
